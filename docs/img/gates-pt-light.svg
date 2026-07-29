@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 660" width="1280" height="660" role="img" aria-label="Dois portões. O primeiro roda na hora do commit, na máquina do desenvolvedor: o bootstrap.sh aponta o core.hooksPath global do git para um hook de pre-commit que primeiro encadeia os hooks locais e depois roda o Gitleaks sobre o diff staged, bloqueando o commit se achar segredo. O segundo roda na CI a cada push e pull request, mais um rescan semanal, executando Trivy, OSV-Scanner, Gitleaks e Semgrep com SBOM CycloneDX e quebrando o build no CRITICAL. O portão 1 é best-effort: não roda sem gitleaks instalado, em repositórios com hooksPath local próprio, nem quando o commit usa --no-verify — e é por isso que o portão 2 existe.">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8c959f"/></marker>
+</defs>
+<rect width="1280" height="660" fill="none"/>
+<text x="28" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#1FA97F">DOIS PORTÕES · ONDE O KIT DE FATO BLOQUEIA UMA MUDANÇA</text>
+<rect x="28" y="64" width="600" height="404" rx="12" fill="#fbfcfd" stroke="#d29922" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="48" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1" fill="#d29922">PORTÃO 1 · NA HORA DO COMMIT, NA SUA MÁQUINA</text>
+<rect x="48" y="106" width="560" height="80" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 115 a8 8 0 0 1 8-8 h0 v78 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="136" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">bootstrap.sh</text>
+<text x="66" y="159" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">git config --global core.hooksPath ~/.config/git/hooks</text>
+<text x="66" y="179" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">um comando e todo repo da máquina fica coberto</text>
+<rect x="48" y="218" width="560" height="72" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 227 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="248" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">git commit</text>
+<text x="66" y="271" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">em qualquer repositório da máquina</text>
+<rect x="48" y="322" width="560" height="126" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 331 a8 8 0 0 1 8-8 h0 v124 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="352" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">pre-commit global</text>
+<text x="66" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">1 · encadeia .husky/ e .git/hooks primeiro</text>
+<text x="66" y="395" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">(o hooksPath global deixaria de executá-los)</text>
+<text x="66" y="415" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">2 · gitleaks --staged --redact sobre o diff staged</text>
+<text x="66" y="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">segredo encontrado → commit bloqueado · limpo → commit segue</text>
+<rect x="652" y="64" width="600" height="404" rx="12" fill="#fbfcfd" stroke="#1FA97F" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="672" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1" fill="#1FA97F">PORTÃO 2 · CI, A CADA PUSH E PULL REQUEST</text>
+<rect x="672" y="106" width="560" height="80" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 115 a8 8 0 0 1 8-8 h0 v78 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="136" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">git push  ·  pull request</text>
+<text x="690" y="159" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">e também semanal por cron, e sob demanda</text>
+<rect x="672" y="218" width="560" height="72" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 227 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="248" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">security.yml</text>
+<text x="690" y="271" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">push · PR · rescan semanal · disparo manual</text>
+<rect x="672" y="322" width="560" height="126" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 331 a8 8 0 0 1 8-8 h0 v124 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="352" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">security-reusable.yml</text>
+<text x="690" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">Trivy + OSV-Scanner + Gitleaks + Semgrep + SBOM CycloneDX</text>
+<text x="690" y="395" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">quebra o build no CRITICAL (OSV informativo, salvo osv_gate: true)</text>
+<text x="690" y="415" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">actions fixadas por SHA · ferramentas fixadas, SHA256 + cosign</text>
+<path d="M328 186 L328 214" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M328 290 L328 318" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M952 186 L952 214" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M952 290 L952 318" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M608 146 L668 146" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<rect x="28" y="500" width="1224" height="132" rx="8" fill="#f6f8fa" stroke="#8957e5" stroke-width="1.2"/>
+<path d="M29 509 a8 8 0 0 1 8-8 h0 v130 h0 a8 8 0 0 1-8-8 Z" fill="#8957e5"/>
+<text x="48" y="530" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2328">O portão 1 é best-effort. Ele NÃO roda quando:</text>
+<text x="48" y="556" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· a máquina não tem gitleaks — o hook avisa e deixa o commit passar</text>
+<text x="48" y="578" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· o repositório define seu próprio core.hooksPath local (Husky v9 e afins)</text>
+<text x="48" y="600" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· o commit usa --no-verify — nenhum hook de pre-commit impede isso</text>
+<text x="48" y="622" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#1f2328">O portão 2 é o que não dá para pular. É por isso que os dois existem.</text>
+</svg>
