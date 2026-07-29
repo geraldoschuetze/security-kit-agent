@@ -55,7 +55,7 @@ Flags: `--no-gemini` (Claude only) · `--no-tools` (skips trivy/osv-scanner/semg
 3. Installs the `settings.json` files from **sanitized templates** (only if they
    don't already exist — it never overwrites yours). You fill in the
    `__SET_...__` placeholders.
-4. Enables the **GLOBAL no-bypass git hook** (`core.hooksPath`) that blocks any
+4. Enables the **GLOBAL commit-time git hook** (`core.hooksPath`) that blocks any
    commit containing a secret in **any** repository on the machine.
 5. Installs **trivy / osv-scanner / semgrep / gitleaks** (pinned versions +
    verified checksums).
@@ -204,7 +204,7 @@ security-kit-agent/
 ├── gemini/
 │   └── settings.template.json       # sanitized template (Gemini CLI)
 ├── git-hooks/
-│   └── pre-commit                   # global no-bypass git hook (Gitleaks)
+│   └── pre-commit                   # global commit-time git hook (Gitleaks)
 └── .github/workflows/               # security.yml + security-reusable.yml
 ```
 
