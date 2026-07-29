@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 650" width="1280" height="650" role="img" aria-label="Como roda um /security-scan: pré-checagem das quatro ferramentas e então quatro dimensões em paralelo, em contextos isolados — sca-scanner com Trivy e OSV-Scanner, sast-scanner com Semgrep, secrets-scanner com Gitleaks e um revisor semântico que trabalha por raciocínio — validadas cruzadamente entre si, triadas contra falso positivo e escritas num relatório único com veredito.">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6e7681"/></marker>
+</defs>
+<rect width="1280" height="650" fill="none"/>
+<text x="28" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#8957e5">GATILHO</text>
+<text x="330" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#017CEE">QUATRO DIMENSÕES · EM PARALELO</text>
+<text x="712" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#FF694B">RECONCILIAÇÃO</text>
+<text x="1000" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#20A7C9">SAÍDA</text>
+<rect x="28" y="70" width="252" height="96" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M29 79 a8 8 0 0 1 8-8 h0 v94 h0 a8 8 0 0 1-8-8 Z" fill="#8957e5"/>
+<text x="46" y="100" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">/security-scan</text>
+<text x="46" y="123" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">completo · diff · &lt;caminho&gt;</text>
+<text x="46" y="143" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">ou peça em linguagem natural</text>
+<rect x="28" y="200" width="252" height="122" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M29 209 a8 8 0 0 1 8-8 h0 v120 h0 a8 8 0 0 1-8-8 Z" fill="#8957e5"/>
+<text x="46" y="230" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#e6edf3">Pré-checagem</text>
+<text x="46" y="253" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">trivy · osv-scanner</text>
+<text x="46" y="273" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">semgrep · gitleaks</text>
+<text x="46" y="293" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">ferramenta ausente → avisa qual</text>
+<text x="46" y="313" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">categoria fica descoberta</text>
+<rect x="28" y="464" width="252" height="96" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1" stroke-dasharray="5 4"/>
+<path d="M29 473 a8 8 0 0 1 8-8 h0 v94 h0 a8 8 0 0 1-8-8 Z" fill="#FF694B"/>
+<text x="46" y="494" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">dast-scanner</text>
+<text x="46" y="517" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">OWASP ZAP — sob demanda,</text>
+<text x="46" y="537" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">só com uma URL no ar</text>
+<rect x="330" y="58" width="330" height="306" rx="10" fill="#0d1117" stroke="#2f363d" stroke-width="1" stroke-dasharray="5 4"/>
+<text x="346" y="82" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" letter-spacing="1" fill="#017CEE">POR REGRA — AMPLO E DETERMINÍSTICO</text>
+<rect x="346" y="96" width="298" height="88" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M347 105 a8 8 0 0 1 8-8 h0 v86 h0 a8 8 0 0 1-8-8 Z" fill="#017CEE"/>
+<text x="364" y="126" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">sca-scanner</text>
+<text x="364" y="149" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">Trivy + OSV-Scanner</text>
+<text x="364" y="169" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">duas bases, reconciliadas</text>
+<rect x="346" y="198" width="298" height="72" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M347 207 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#017CEE"/>
+<text x="364" y="228" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">sast-scanner</text>
+<text x="364" y="251" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">Semgrep — regras no seu código</text>
+<rect x="346" y="284" width="298" height="72" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M347 293 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#017CEE"/>
+<text x="364" y="314" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">secrets-scanner</text>
+<text x="364" y="337" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">Gitleaks — árvore + histórico</text>
+<rect x="330" y="384" width="330" height="140" rx="10" fill="#0d1117" stroke="#FF694B" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="346" y="408" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="11.5" font-weight="700" letter-spacing="1" fill="#FF694B">POR RACIOCÍNIO — O QUE A REGRA NÃO VÊ</text>
+<rect x="346" y="420" width="298" height="88" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M347 429 a8 8 0 0 1 8-8 h0 v86 h0 a8 8 0 0 1-8-8 Z" fill="#FF694B"/>
+<text x="364" y="450" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">semantic-reviewer</text>
+<text x="364" y="473" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">autorização quebrada · IDOR</text>
+<text x="364" y="493" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">lógica de negócio explorável</text>
+<rect x="712" y="150" width="252" height="122" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M713 159 a8 8 0 0 1 8-8 h0 v120 h0 a8 8 0 0 1-8-8 Z" fill="#FF694B"/>
+<text x="730" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#e6edf3">Validação cruzada</text>
+<text x="730" y="203" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">regra × raciocínio</text>
+<text x="730" y="223" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">promove o que é explorável</text>
+<text x="730" y="243" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">rebaixa o que está mitigado</text>
+<rect x="712" y="316" width="252" height="96" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M713 325 a8 8 0 0 1 8-8 h0 v94 h0 a8 8 0 0 1-8-8 Z" fill="#FF694B"/>
+<text x="730" y="346" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#e6edf3">Triagem</text>
+<text x="730" y="369" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">falsos positivos separados</text>
+<text x="730" y="389" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">priorizado por severidade</text>
+<rect x="1000" y="150" width="252" height="122" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M1001 159 a8 8 0 0 1 8-8 h0 v120 h0 a8 8 0 0 1-8-8 Z" fill="#20A7C9"/>
+<text x="1018" y="180" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#e6edf3">security-report.md</text>
+<text x="1018" y="203" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">.security/history/</text>
+<text x="1018" y="223" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">métricas + tendência vs anterior</text>
+<rect x="1000" y="316" width="252" height="122" rx="8" fill="#151b23" stroke="#3d444d" stroke-width="1"/>
+<path d="M1001 325 a8 8 0 0 1 8-8 h0 v120 h0 a8 8 0 0 1-8-8 Z" fill="#20A7C9"/>
+<text x="1018" y="346" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="19" font-weight="600" fill="#e6edf3">Veredito</text>
+<circle cx="1024" cy="374" r="5" fill="#cf222e"/>
+<text x="1040" y="379" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">CRÍTICO · segredo vivo</text>
+<circle cx="1024" cy="398" r="5" fill="#d29922"/>
+<text x="1040" y="403" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">ALTO sem correção</text>
+<circle cx="1024" cy="422" r="5" fill="#1a7f37"/>
+<text x="1040" y="427" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">limpo</text>
+<path d="M154 166 L154 196" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M280 240 C306 240 306 190 326 190" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M280 280 C306 280 306 450 326 450" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M660 210 L708 210" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M660 452 C686 452 686 250 708 244" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M838 272 L838 312" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M964 364 C982 364 982 220 996 212" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M1126 272 L1126 312" fill="none" stroke="#6e7681" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M280 520 C520 572 700 566 780 418" fill="none" stroke="#6e7681" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ah)"/>
+<rect x="28" y="580" width="1224" height="44" rx="7" fill="#0f141a" stroke="#2f363d" stroke-width="1"/>
+<text x="640" y="607" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#9198a1">Cada dimensão roda no seu próprio contexto isolado e devolve só um resumo estruturado — o JSON bruto dos scanners nunca chega na conversa.</text>
+</svg>
