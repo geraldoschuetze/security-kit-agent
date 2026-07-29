@@ -1,0 +1,23 @@
+{
+  "security": {
+    "auth": {
+      "selectedType": "gemini-api-key"
+    },
+    "enablePermanentToolApproval": true,
+    "disableAlwaysAllow": true
+  },
+  "previewFeatures": true,
+  "selectedModels": {
+    "default": "gemini-3-pro"
+  },
+  "general": {
+    "previewFeatures": true,
+    "preferredEditor": "vscode",
+    "plan": {
+      "enabled": true
+    }
+  },
+  "ide": {
+    "enabled": true
+  }
+}

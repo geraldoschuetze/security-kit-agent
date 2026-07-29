@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# ~/.config/git/hooks/pre-commit — Hook GLOBAL sem-bypass (via core.hooksPath global).
+# Roda em TODO commit de TODO repositório da máquina (inclusive commits manuais
+# no terminal), a menos que um repo defina um core.hooksPath LOCAL próprio
+# (ex.: Husky v9). Nesses repos, adicione o gitleaks ao hook local — veja o
+# README do kit (~/.claude/security-kit/README.md).
+#
+# Objetivo: bloquear commit se o Gitleaks achar segredos staged.
+# Encadeamento: preserva hooks locais legados que o core.hooksPath global
+# deixaria de executar (.git/hooks/pre-commit e .husky/pre-commit).
+
+set -uo pipefail
+
+REPO_ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+GIT_DIR="$(git rev-parse --git-dir 2>/dev/null || echo .git)"
+
+run_local_hook() {
+  local hook="$1"
+  if [ -x "$hook" ] && [ "$(readlink -f "$hook" 2>/dev/null)" != "$(readlink -f "$0" 2>/dev/null)" ]; then
+    echo "[pre-commit-global] Encadeando hook local: $hook"
+    "$hook" "$@" || { echo "[pre-commit-global] hook local falhou — abortando commit." >&2; exit 1; }
+  fi
+}
+
+# 1) Encadeia hooks locais que o redirecionamento global desativaria.
+#    (o core.hooksPath global faz o git ignorar .git/hooks/* — restauramos aqui)
+run_local_hook "$REPO_ROOT/.husky/pre-commit"
+run_local_hook "$GIT_DIR/hooks/pre-commit.local"
+run_local_hook "$GIT_DIR/hooks/pre-commit"
+
+# 2) Gate de segredos (Gitleaks).
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "[pre-commit-global] AVISO: gitleaks não instalado — commit SEM verificação de segredos." >&2
+  echo "[pre-commit-global] Rode: bash ~/.claude/scripts/install-tools.sh" >&2
+  exit 0
+fi
+
+if ! gitleaks git --pre-commit --staged --no-banner --redact "$REPO_ROOT" >/dev/null 2>&1; then
+  {
+    echo "[pre-commit-global] COMMIT BLOQUEADO: Gitleaks encontrou possíveis segredos staged."
+    echo "Veja (valores redigidos): gitleaks git --pre-commit --staged --redact ."
+    echo "Remova o segredo (env/secret manager), unstage, e tente de novo."
+    echo "Falso positivo? Adicione regra em .gitleaksignore com justificativa e data de expiração."
+  } >&2
+  exit 1
+fi
+
+exit 0

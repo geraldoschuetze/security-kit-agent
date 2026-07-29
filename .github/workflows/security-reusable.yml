@@ -1,0 +1,127 @@
+# Workflow REUTILIZÁVEL de segurança (OSS anti-Snyk).
+# Trivy + OSV-Scanner (SCA — duas bases de vulnerabilidade) + Gitleaks (secrets no
+# histórico) + Semgrep (SAST) + SBOM CycloneDX. Bloqueia o job em CRITICAL.
+#
+# Por que duas bases de SCA: o Trivy indexa por CVE (NVD/GHSA/distro) e não vê
+# advisory sem CVE atribuído; o OSV indexa por ID de advisory (OSV.dev) e pega
+# esses casos, além de ter parsers de lockfile mais amplos (inclui bun.lock).
+#
+# Supply-chain: usa IMAGENS DOCKER OFICIAIS fixadas por versão (não a
+# trivy-action, que sofreu ataque de supply chain em mar/2026) e apenas
+# actions first-party fixadas por commit SHA.
+#
+# Uso (num repo qualquer, .github/workflows/security.yml):
+#   jobs:
+#     security:
+#       uses: geraldoschuetze/claude-security-kit/.github/workflows/security-reusable.yml@v1
+#   Repo privado: habilite o acesso em Settings → Actions → "Access" do kit.
+
+on:
+  workflow_call:
+    inputs:
+      fail_on_severity:
+        description: "Severidade que falha o build (Trivy)"
+        type: string
+        default: "CRITICAL"
+      osv_gate:
+        description: "Se true, o OSV-Scanner também bloqueia o build (default: informativo)"
+        type: boolean
+        default: false
+      dast_url:
+        description: "Se preenchido, roda ZAP baseline contra esta URL"
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    env:
+      TRIVY_IMAGE: ghcr.io/aquasecurity/trivy:0.72.0
+      OSV_IMAGE: ghcr.io/google/osv-scanner:v2.4.0
+      GITLEAKS_IMAGE: ghcr.io/gitleaks/gitleaks:v8.30.1
+      SEMGREP_IMAGE: semgrep/semgrep:1.171.0
+    steps:
+      - name: Checkout (histórico completo p/ scan de segredos)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Trivy — relatório (todas as severidades, informativo)
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$TRIVY_IMAGE" \
+            fs --scanners vuln,misconfig,secret,license \
+            --severity CRITICAL,HIGH,MEDIUM --no-progress .
+
+      - name: Trivy — SBOM CycloneDX (artefato)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$TRIVY_IMAGE" \
+            fs --format cyclonedx --output /src/sbom.cdx.json .
+
+      - name: OSV-Scanner — 2ª base de SCA (pega advisory SEM CVE, que o Trivy não vê)
+        env:
+          OSV_GATE: ${{ inputs.osv_gate }}
+        run: |
+          # Exit != 0 no osv-scanner significa "achou vulnerabilidade", não erro de execução.
+          # Por padrão é informativo (o gate do build é o do Trivy); osv_gate=true bloqueia.
+          if docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$OSV_IMAGE" \
+               scan source -r --format table /src; then
+            echo "OSV: 0 vulnerabilidades."
+          else
+            echo "OSV encontrou vulnerabilidades (ver tabela acima)."
+            if [ "$OSV_GATE" = "true" ]; then exit 1; fi
+            echo "osv_gate=false → informativo, não bloqueia o build."
+          fi
+
+      - name: OSV-Scanner — JSON (artefato)
+        continue-on-error: true
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$OSV_IMAGE" \
+            scan source -r --format json --output-file /src/osv.json /src || true
+
+      - name: Gitleaks — segredos no histórico (GATE)
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$GITLEAKS_IMAGE" \
+            git --no-banner --redact --exit-code 1 /src
+
+      - name: Semgrep — SAST rulesets fixos, sem telemetria (GATE em ERROR)
+        run: |
+          docker run --rm -v "$GITHUB_WORKSPACE:/src" -w /src "$SEMGREP_IMAGE" \
+            semgrep scan \
+              --config p/security-audit --config p/owasp-top-ten --config p/secrets \
+              --metrics=off --error --severity ERROR \
+              --exclude node_modules --exclude .next --exclude dist --exclude build /src
+
+      - name: Trivy — GATE (falha na severidade configurada)
+        env:
+          FAIL_SEV: ${{ inputs.fail_on_severity }}   # via env p/ evitar shell injection
+        run: |
+          docker run --rm -e FAIL_SEV -v "$GITHUB_WORKSPACE:/src" -w /src "$TRIVY_IMAGE" \
+            fs --scanners vuln,misconfig,secret \
+            --severity "$FAIL_SEV" \
+            --exit-code 1 --no-progress --quiet .
+
+      - name: DAST — ZAP baseline (opcional, só se dast_url informado)
+        if: ${{ inputs.dast_url != '' }}
+        continue-on-error: true
+        env:
+          DAST_URL: ${{ inputs.dast_url }}           # via env p/ evitar shell injection
+        run: |
+          docker run --rm --network=host -e DAST_URL -v "$GITHUB_WORKSPACE:/zap/wrk:rw" \
+            zaproxy/zap-stable:2.15.0 zap-baseline.py \
+            -t "$DAST_URL" -J zap-baseline.json -m 5 || true
+
+      - name: Upload de relatórios (SBOM/ZAP)
+        if: ${{ always() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: security-reports
+          path: |
+            sbom.cdx.json
+            osv.json
+            zap-baseline.json
+          if-no-files-found: ignore
+          retention-days: 30

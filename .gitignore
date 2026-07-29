@@ -1,0 +1,17 @@
+# Saídas de scans / relatórios gerados
+security-report.md
+.security/
+*.cdx.json
+sbom.cdx.json
+zap-baseline.json
+/tmp/
+
+# Segredos / ambiente (defesa em profundidade — o hook também bloqueia)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Ruído de SO/editor
+.DS_Store
