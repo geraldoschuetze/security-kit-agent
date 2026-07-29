@@ -20,7 +20,7 @@ perde CVE. Este kit roda as duas e consolida num relatório único.
 | `secrets-scanner` | Detecção de segredos | **Gitleaks** | MIT |
 | `semantic-reviewer` | (além do Snyk: authz/IDOR/lógica) | **Raciocínio LLM** | — |
 | `dast-scanner` | (não coberto pelo Snyk padrão) | **OWASP ZAP** | Apache-2.0 |
-| Hook git global | Prevenção sem-bypass | Gitleaks | — |
+| Hook git global | Prevenção na hora do commit | Gitleaks | — |
 | CI reutilizável | Gate de PR | Trivy+OSV+Semgrep+Gitleaks | — |
 
 > Este repo consolida o antigo `claude-security-kit` (kit + CI) com o setup
@@ -54,7 +54,7 @@ O `bootstrap.sh` é idempotente e:
 2. Copia as skills para `~/.gemini/skills` (servem para os dois).
 3. Instala os `settings.json` a partir de **templates sanitizados** (só se não
    existirem — nunca sobrescreve os seus). Você preenche os placeholders `__SET_...__`.
-4. Ativa o **hook git GLOBAL sem-bypass** (`core.hooksPath`) que bloqueia commit
+4. Ativa o **hook git GLOBAL na hora do commit** (`core.hooksPath`) que bloqueia commit
    com segredo em **qualquer** repositório da máquina.
 5. Instala **trivy / osv-scanner / semgrep / gitleaks** (versões fixas + checksum
    verificado).
@@ -201,7 +201,7 @@ security-kit-agent/
 ├── gemini/
 │   └── settings.template.json       # template sanitizado (Gemini CLI)
 ├── git-hooks/
-│   └── pre-commit                   # hook git global sem-bypass (Gitleaks)
+│   └── pre-commit                   # hook git global de commit (Gitleaks)
 └── .github/workflows/               # security.yml + security-reusable.yml
 ```
 
