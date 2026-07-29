@@ -20,12 +20,25 @@ misses CVEs. This kit runs both and consolidates them into a single report.
 | `secrets-scanner` | Secret detection | **Gitleaks** | MIT |
 | `semantic-reviewer` | (beyond Snyk: authz/IDOR/logic) | **LLM reasoning** | — |
 | `dast-scanner` | (not covered by stock Snyk) | **OWASP ZAP** | Apache-2.0 |
-| Global git hook | No-bypass prevention | Gitleaks | — |
+| Global git hook | Prevention at commit time | Gitleaks | — |
 | Reusable CI | PR gate | Trivy+OSV+Semgrep+Gitleaks | — |
 
 > This repo consolidates the former `claude-security-kit` (kit + CI) with the
 > portable `security_skills` setup (personal skills + Claude/Gemini bootstrap).
 > It is the single tooling repo — it installs into `~/.claude` **and** `~/.gemini`.
+
+## Where it blocks
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/gates-dark.svg">
+  <img alt="Two gates. Gate one runs at commit time: bootstrap.sh points git's global core.hooksPath at a pre-commit hook that chains local hooks and then runs Gitleaks over the staged diff. Gate two runs in CI on every push and pull request plus a weekly re-scan, running Trivy, OSV-Scanner, Gitleaks and Semgrep with a CycloneDX SBOM and failing the build on CRITICAL." src="docs/img/gates-light.svg" width="100%">
+</picture>
+
+The commit-time hook is the fast feedback loop, not the guarantee. It is skipped
+when `gitleaks` isn't installed, when a repository sets its own local
+`core.hooksPath` (Husky v9 and friends), and by `git commit --no-verify` — no
+pre-commit hook can stop that last one. **CI is the gate that holds**, which is
+why the kit ships both.
 
 ## Installation (Claude + Gemini, one command)
 
@@ -146,25 +159,10 @@ traffic).
 
 ## Execution order
 
-```mermaid
-flowchart TD
-    A["/security-scan  (full · diff · path)"] --> B{"Pre-check:<br/>trivy · osv-scanner · semgrep · gitleaks?"}
-    B -- "tool missing" --> B2["warns which category is left uncovered"]
-    B -- "ok" --> C["Dispatch in PARALLEL (isolated contexts)"]
-    C --> D["sca-scanner (Trivy + OSV:<br/>2 databases, reconciled)"]
-    C --> E["sast-scanner (Semgrep)"]
-    C --> F["secrets-scanner (Gitleaks)"]
-    C --> S["semantic-reviewer (reasoning: authz/logic)"]
-    D & E & F & S --> G["Wait for the 4 summaries"]
-    G --> X["Cross-validation rule × reasoning<br/>(raises/lowers severity)"]
-    X --> H["False-positive triage + prioritization"]
-    H --> I["Single report + history<br/>(.security/history/ + metrics + trend)"]
-    I --> J{"Verdict"}
-    J --> K["🔴 CRITICAL / live secret / exploitable authz"]
-    J --> L["🟡 HIGH with no fix / several MEDIUM"]
-    J --> M["🟢 OK"]
-    I -.->|on-demand, if asked + URL| N["dast-scanner (ZAP)"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/scan-dark.svg">
+  <img alt="How one /security-scan runs: a pre-check for the four tools, then four dimensions in parallel isolated contexts — sca-scanner (Trivy + OSV-Scanner), sast-scanner (Semgrep), secrets-scanner (Gitleaks) and a semantic reviewer working by reasoning — cross-validated against each other, triaged for false positives, and written to a single report with a verdict." src="docs/img/scan-light.svg" width="100%">
+</picture>
 
 **Cross-validation** is the payoff of combining both families: a SAST finding that
 the semantic review confirms exploitable is **promoted** in severity; a finding it
