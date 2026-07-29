@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 660" width="1280" height="660" role="img" aria-label="Two gates. Gate one runs at commit time on the developer machine: bootstrap.sh points git's global core.hooksPath at a pre-commit hook that first chains any local hooks, then runs Gitleaks over the staged diff and blocks the commit if a secret is found. Gate two runs in CI on every push and pull request, plus a weekly re-scan, running Trivy, OSV-Scanner, Gitleaks and Semgrep with a CycloneDX SBOM and failing the build on CRITICAL. Gate one is best-effort: it does not run without gitleaks installed, in repositories with their own local hooks path, or when a commit uses --no-verify — which is why gate two exists.">
+<defs>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#8c959f"/></marker>
+</defs>
+<rect width="1280" height="660" fill="none"/>
+<text x="28" y="40" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" fill="#1FA97F">TWO GATES · WHERE THE KIT ACTUALLY BLOCKS A CHANGE</text>
+<rect x="28" y="64" width="600" height="404" rx="12" fill="#fbfcfd" stroke="#d29922" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="48" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1" fill="#d29922">GATE 1 · COMMIT TIME, ON YOUR MACHINE</text>
+<rect x="48" y="106" width="560" height="80" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 115 a8 8 0 0 1 8-8 h0 v78 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="136" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">bootstrap.sh</text>
+<text x="66" y="159" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">git config --global core.hooksPath ~/.config/git/hooks</text>
+<text x="66" y="179" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">one command, then every repo on the machine is covered</text>
+<rect x="48" y="218" width="560" height="72" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 227 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="248" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">git commit</text>
+<text x="66" y="271" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">in any repository on the machine</text>
+<rect x="48" y="322" width="560" height="126" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M49 331 a8 8 0 0 1 8-8 h0 v124 h0 a8 8 0 0 1-8-8 Z" fill="#d29922"/>
+<text x="66" y="352" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">global pre-commit</text>
+<text x="66" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">1 · chains .husky/ and .git/hooks first</text>
+<text x="66" y="395" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">(the global hooksPath would otherwise skip them)</text>
+<text x="66" y="415" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">2 · gitleaks --staged --redact over the staged diff</text>
+<text x="66" y="435" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">secret found → commit blocked · clean → commit proceeds</text>
+<rect x="652" y="64" width="600" height="404" rx="12" fill="#fbfcfd" stroke="#1FA97F" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="672" y="90" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="1" fill="#1FA97F">GATE 2 · CI, ON EVERY PUSH AND PULL REQUEST</text>
+<rect x="672" y="106" width="560" height="80" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 115 a8 8 0 0 1 8-8 h0 v78 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="136" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">git push  ·  pull request</text>
+<text x="690" y="159" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">also weekly on a cron, and on demand</text>
+<rect x="672" y="218" width="560" height="72" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 227 a8 8 0 0 1 8-8 h0 v70 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="248" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">security.yml</text>
+<text x="690" y="271" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" fill="#59636e">push · PR · weekly re-scan · manual dispatch</text>
+<rect x="672" y="322" width="560" height="126" rx="8" fill="#ffffff" stroke="#d1d9e0" stroke-width="1"/>
+<path d="M673 331 a8 8 0 0 1 8-8 h0 v124 h0 a8 8 0 0 1-8-8 Z" fill="#1FA97F"/>
+<text x="690" y="352" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="18" font-weight="600" fill="#1f2328">security-reusable.yml</text>
+<text x="690" y="375" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">Trivy + OSV-Scanner + Gitleaks + Semgrep + CycloneDX SBOM</text>
+<text x="690" y="395" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">fails the build on CRITICAL (OSV informational unless osv_gate: true)</text>
+<text x="690" y="415" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="13.5" fill="#59636e">actions pinned by SHA · tool versions pinned, SHA256 + cosign verified</text>
+<path d="M328 186 L328 214" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M328 290 L328 318" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M952 186 L952 214" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M952 290 L952 318" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<path d="M608 146 L668 146" fill="none" stroke="#8c959f" stroke-width="1.6" marker-end="url(#ah)"/>
+<rect x="28" y="500" width="1224" height="132" rx="8" fill="#f6f8fa" stroke="#8957e5" stroke-width="1.2"/>
+<path d="M29 509 a8 8 0 0 1 8-8 h0 v130 h0 a8 8 0 0 1-8-8 Z" fill="#8957e5"/>
+<text x="48" y="530" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#1f2328">Gate 1 is best-effort. It does not run when:</text>
+<text x="48" y="556" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· the machine has no gitleaks — the hook warns, then lets the commit through</text>
+<text x="48" y="578" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· the repository sets its own local core.hooksPath (Husky v9 and friends)</text>
+<text x="48" y="600" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" fill="#59636e">· the commit uses --no-verify — no pre-commit hook can stop that</text>
+<text x="48" y="622" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14.5" font-weight="600" fill="#1f2328">Gate 2 is the one that cannot be skipped. That is why both exist.</text>
+</svg>
