@@ -27,6 +27,19 @@ perde CVE. Este kit roda as duas e consolida num relatório único.
 > portátil `security_skills` (skills pessoais + bootstrap Claude/Gemini). É o
 > único repo de tooling — instala em `~/.claude` **e** `~/.gemini`.
 
+## Onde ele bloqueia
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/gates-pt-dark.svg">
+  <img alt="Dois portões. O primeiro roda na hora do commit: o bootstrap.sh aponta o core.hooksPath global do git para um hook de pre-commit que encadeia os hooks locais e depois roda o Gitleaks sobre o diff staged. O segundo roda na CI a cada push e pull request, mais rescan semanal, com Trivy, OSV-Scanner, Gitleaks e Semgrep e SBOM CycloneDX, quebrando o build no CRITICAL." src="docs/img/gates-pt-light.svg" width="100%">
+</picture>
+
+O hook de commit é o laço de feedback rápido, não a garantia. Ele é pulado quando
+o `gitleaks` não está instalado, quando um repositório define seu próprio
+`core.hooksPath` local (Husky v9 e afins), e por `git commit --no-verify` — nenhum
+hook de pre-commit impede esse último. **A CI é o portão que segura**, e é por
+isso que o kit entrega os dois.
+
 ## Instalação (Claude + Gemini, um comando)
 
 ```bash
@@ -144,25 +157,10 @@ uma URL que **você** fornece. **Não roda automaticamente** (gera tráfego real
 
 ## Ordem de execução
 
-```mermaid
-flowchart TD
-    A["/security-scan  (full · diff · path)"] --> B{"Pré-checagem:<br/>trivy · osv-scanner · semgrep · gitleaks?"}
-    B -- "falta ferramenta" --> B2["avisa qual categoria fica descoberta"]
-    B -- "ok" --> C["Dispatch em PARALELO (contextos isolados)"]
-    C --> D["sca-scanner (Trivy + OSV:<br/>2 bases, reconciliadas)"]
-    C --> E["sast-scanner (Semgrep)"]
-    C --> F["secrets-scanner (Gitleaks)"]
-    C --> S["semantic-reviewer (raciocínio: authz/lógica)"]
-    D & E & F & S --> G["Aguarda os 4 resumos"]
-    G --> X["Cross-validação regra × raciocínio<br/>(sobe/desce severidade)"]
-    X --> H["Triagem de falso-positivo + priorização"]
-    H --> I["Relatório único + histórico<br/>(.security/history/ + métricas + tendência)"]
-    I --> J{"Veredito"}
-    J --> K["🔴 CRITICAL / segredo ativo / authz explorável"]
-    J --> L["🟡 HIGH sem fix / vários MEDIUM"]
-    J --> M["🟢 OK"]
-    I -.->|on-demand, se pedir + URL| N["dast-scanner (ZAP)"]
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/img/scan-pt-dark.svg">
+  <img alt="Como roda um /security-scan: pré-checagem das quatro ferramentas e então quatro dimensões em paralelo, em contextos isolados — sca-scanner (Trivy + OSV-Scanner), sast-scanner (Semgrep), secrets-scanner (Gitleaks) e um revisor semântico por raciocínio — validadas cruzadamente, triadas contra falso positivo e escritas num relatório único com veredito." src="docs/img/scan-pt-light.svg" width="100%">
+</picture>
 
 A **cross-validação** é o ganho da junção: achado do SAST que a revisão semântica
 confirma explorável **sobe** de severidade; achado que ela mostra mitigado
